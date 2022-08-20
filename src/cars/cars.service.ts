@@ -15,6 +15,10 @@ export class CarsService {
       id: 3,
       brand: 'Mercedez',
     },
+    {
+      id: 4,
+      brand: 'Susuki',
+    },
   ];
 
   findAll() {
