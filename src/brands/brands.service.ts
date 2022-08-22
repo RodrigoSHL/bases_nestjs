@@ -10,15 +10,15 @@ export class BrandsService {
     {
       id: uuid(),
       name: 'Toyota',
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
     },
   ];
 
   create(createBrandDto: CreateBrandDto) {
     const newBrand: Brand = {
       id: uuid(),
-      name: createBrandDto.name,
-      createdAt: new Date(),
+      name: createBrandDto.name.toLocaleLowerCase(),
+      createdAt: new Date().getTime(),
     };
     this.arrayBrand.push(newBrand);
     return newBrand;
@@ -34,11 +34,20 @@ export class BrandsService {
     return brand;
   }
 
-  update(id: number, updateBrandDto: UpdateBrandDto) {
-    return `This action updates a #${id} brand`;
+  update(id: string, updateBrandDto: UpdateBrandDto) {
+    let brandDB = this.findOne(id);
+    this.arrayBrand = this.arrayBrand.map((brand) => {
+      if (brand.id === id) {
+        (brand.updatedAt = new Date().getTime()),
+          (brandDB = { ...brandDB, ...updateBrandDto });
+        return brandDB;
+      }
+      return brandDB;
+    });
+    return brandDB;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+  remove(id: string) {
+    this.arrayBrand = this.arrayBrand.filter((brand) => brand.id !== id);
   }
 }
