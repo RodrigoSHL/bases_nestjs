@@ -6,13 +6,7 @@ import { Brand } from './entities/brand.entity';
 
 @Injectable()
 export class BrandsService {
-  arrayBrand: Brand[] = [
-    {
-      id: uuid(),
-      name: 'Toyota',
-      createdAt: new Date().getTime(),
-    },
-  ];
+  arrayBrand: Brand[] = [];
 
   create(createBrandDto: CreateBrandDto) {
     const newBrand: Brand = {
@@ -49,5 +43,8 @@ export class BrandsService {
 
   remove(id: string) {
     this.arrayBrand = this.arrayBrand.filter((brand) => brand.id !== id);
+  }
+  fillBrandsWithSeedData(brands: Brand[]) {
+    this.arrayBrand = brands;
   }
 }
